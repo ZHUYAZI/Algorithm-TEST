@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Dec  8 11:27:52 2019
+
+@author: yazi
+"""
+
+import urllib.request
+#from collections import defaultdict
+target_url='https://d3c33hcgiwev3.cloudfront.net/_790eb8b186eefb5b63d0bf38b5096873_mwis.txt?Expires=1575936000&Signature=lgVq2nO3VTFXFMsguyGnGtp7Irolhjr6fBTAfkNHSSQG47dvDz1WMod0l59abR82ShsLuaOX0-qbYOosskV299oReG~dLeTuGD2m71MoCBHCcjDU9D0VsDrQ9NCdZiNxeNCQB6Q6MUI4LayJDTtXe6KFeiUY8diIO7BNjv4vcGA_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A'
+file = urllib.request.urlopen(target_url)
+theArray=[]
+number=0
+n=0
+for line in file:
+    n+=1
+    a=line.decode("utf-8").strip()
+    if n==1:
+        number=int(a)
+    else:
+        theArray.append(int(a))
+
+print(n)
+
+A=[]
+A.append(theArray[0])
+A.append(max(theArray[1],theArray[0]))
+pos=2
+for element in theArray[2:]:
+    choice=max(element+A[pos-2],A[pos-1])
+    A.append(choice)
+    pos+=1
+
+i=len(A) 
+i-=1 
+solution=[]  
+while i>=0:
+    if A[i]>A[i-1]:
+        solution.append(i+1)
+        i-=2       
+    else:
+        i-=1
+        
+print(list(map(lambda x: x in solution,[1, 2, 3, 4, 17, 117, 517,997])))
